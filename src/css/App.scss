@@ -1,0 +1,22 @@
+@import './config';
+
+/* Styling the main conatainer */
+
+.container {
+    width: $container-width;
+    height: $container-height;
+    background-color: white;
+    @include flex-box(column, nowrap, center, center);
+}
+
+.calculator {
+    width: $calculator-width;
+    height: $calucator-height;
+    background-color: $control-light-gray;
+    border-top-right-radius: $calculator-radius;
+    border-top-left-radius: $calculator-radius;
+    @include flex-box(column, nowrap, center, flex-start); 
+    box-sizing: border-box;
+    box-shadow: 3px 3px 5px rgb(53, 52, 52);
+     
+}

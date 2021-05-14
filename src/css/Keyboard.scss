@@ -1,0 +1,10 @@
+@import './config';
+
+.keyboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 290px;
+    margin-top: 20px;
+    gap: $keyboard-key-spacing $keyboard-key-spacing;
+
+}

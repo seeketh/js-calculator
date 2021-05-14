@@ -1,0 +1,23 @@
+/* Styling the Power Btn */
+
+@import './config';
+
+.power-canvas {
+    background-color: $control-light-gray;
+    border-top-right-radius: $calculator-radius;
+    border-top-left-radius: $calculator-radius;
+    height: 30px;
+    width: $full;
+    font-size: 1.15em;
+    @include flex-box(row, nowrap, center, center);
+}
+
+.power-switch-on {
+    @extend .power-canvas;
+    color: $control-green;
+}
+
+.power-switch-off {
+    @extend .power-canvas;
+    color: $control-inactive;
+}

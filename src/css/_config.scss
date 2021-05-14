@@ -1,0 +1,52 @@
+/* Setups Variables, Reusables etc */
+
+@mixin flex-box($orientation, $wrap, $x, $y) {
+    display: flex;
+    flex-flow: $orientation $wrap;
+    @if $orientation == column {
+        justify-content: $y;
+        align-items: $x;
+    }
+    @else if $orientation == row {
+        justify-content: $x;
+        align-items: $y;
+    }
+}
+
+/* Container */
+$container-width: 100vw;
+$container-height: 100vh;
+$container-background-color: white;
+
+/* Calculator canvas*/
+$calculator-width: 320px;
+$calucator-height: 420px; /* computed to 410px */
+$calculator-background-color: rgb(107, 98, 98);
+$calculator-radius: 8px;
+
+
+/* Control Buttons */
+$control-gray: gray;
+$control-light-gray: #999999;
+$control-green: greenyellow;
+$control-yellow: #ffff80;
+$control-red: red;
+$control-black: black;
+$control-inactive: #d9d9d9;
+
+/* Theme */
+$theme-green: #39e600;
+$theme-blue: rgb(0, 68, 102);
+$theme-gray: rgb(102, 102, 102);
+$theme-red: rgb(172, 57, 57);
+
+/* Display */
+$display-radius: 6px;
+$display-border: 3px solid #7c8798;
+
+/* Keyboard */
+$keyboard-key-spacing: 10px;
+
+
+/* msc */
+$full: 100%;

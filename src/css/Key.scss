@@ -1,0 +1,56 @@
+@import './config';
+
+/* Styling a keyboard key */
+
+.key-layout {
+    height: 50px;
+    width: 60px;
+    outline: none;
+    border-radius: 2px;
+    color: $control-black;
+    font-size: 1.05em;
+}
+
+.inactive-key {
+    width: 60px;
+    border: 2px solid $control-gray;
+    background-color: $control-gray;
+    @extend .key-layout;
+    box-shadow: 3px 3px 5px $control-black;
+    color: black;
+}
+
+.active-key {
+    width: 60px;
+    border: 2px solid orange;
+    background-color: orange;
+    @extend .key-layout;
+    box-shadow: 1px 1px 4px $control-black;
+    transform: translateY(3px);   
+}
+
+.activated-hb-key {
+ @extend .inactive-key;
+ color: white;  
+}
+
+.inactive-long-key {
+    width: $full;
+    border: 2px solid indianred;
+    background-color: indianred;
+    @extend .key-layout;
+    box-shadow: 3px 3px 5px $control-black;
+}
+
+.active-long-key {
+    width: $full;
+    border: 2px solid orange;
+    background-color: orange;
+    @extend .key-layout;
+    box-shadow: 1px 1px 4px $control-black;
+    transform: translateY(3px);   
+}
+
+.long-key {
+    grid-column-start: span 2;
+}

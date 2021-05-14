@@ -1,0 +1,49 @@
+@import './config';
+
+/* Styling the display, which includes two it two inner displays */
+
+.display {
+    height: 60px;
+    width: 290px;
+    @include flex-box(column, nowrap, center, center);
+    border: $display-border;
+    box-sizing: border-box;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.active-display {
+    @extend .display;
+    background-color: rgba($color: #ccebff, $alpha: 0.5);
+}
+
+.active-hb-display {
+    @extend .display;
+    background-color: rgba($color: white, $alpha: 0.8);
+}
+
+.inactive-display {
+    @extend .display;
+    background-color: rgba($color: $control-inactive, $alpha: 0.5);
+}
+
+.formula-display {
+    padding: 3px;
+    height: 25px;
+    width: $full;
+    box-sizing: border-box;
+    border-top-right-radius: $display-radius;
+    border-top-left-radius: $display-radius;
+    font-size: small;
+    font-weight: 700;
+    color: indianred;
+}
+
+.result-display {
+    padding: 3px;
+    height: 35px;
+    width: $full;
+    box-sizing: border-box;
+    border-bottom-right-radius: $display-radius;
+    border-bottom-left-radius: $display-radius;
+}
