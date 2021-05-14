@@ -68,6 +68,7 @@ function App () {
 
     console.log("IF in hi", iFormula.current);
     console.log("EF in hi", input);
+    //(input === "") && (iFormula.current = "");
 
     if (/[C]/.test(inputKey.toUpperCase())) {
       // All clear received
@@ -81,7 +82,7 @@ function App () {
       // All cleared
     } else if (/[=]/.test(inputKey) & (!hasAnswer.current)) {
       console.log("in here", iFormula.current);
-      if(/^[-]?\d{1,12}[-+=*/]\d{1,12}([-+=*/]\d{1,12}){0,10}[-+*/]?$/.test(iFormula.current)) {
+      if(/^[-]?\d{1,12}[-+=*/][-]?\d{1,12}([-+=*/][-]?\d{1,12}){0,10}[-+*/]?$/.test(iFormula.current)) {
         setAnswer(compute(input.replace(/[\D]$/, "")));// Remove any operator or decimal after the last input
         hasAnswer.current = ON;
         iFormula.current = "";
@@ -91,22 +92,25 @@ function App () {
         setInput(rmLeading(input))
       }
     } else {
+      console.log("close in now");
         if (/[.]/.test(inputKey)) { //& (!hasAnswer.current)) {
             if (hasAnswer.current) {
-              setInput("0" + inputKey);
+              setInput(STRING_INIT + inputKey);
               hasAnswer.current = OFF;
               hasDecimal.current = ON;
-              entryCount.current = 1;
-              iFormula.current = STRING_INIT;
+              entryCount.current = INIT;
+              //iFormula.current = STRING_INIT;
             } else if (entryCount.current === INIT & !hasDecimal.current) {
-              setInput(input + "0" + inputKey);
+              setInput(input + STRING_INIT + inputKey);
               hasDecimal.current = ON;
-              entryCount.current++;
-              iFormula.current = STRING_INIT;
+              //entryCount.current++;
+              //iFormula.current = STRING_INIT;
             } else if (entryCount.current >= ENTRY_MAX) {
               notify(ENTRY_MAX_MSG);
             } else if (!hasDecimal.current) {
               setInput(input + inputKey);
+              console.log("ni hapa");
+              hasDecimal.current = ON;
             }
         } else if (hasAnswer.current) {
           if (/[-+*/]/.test(inputKey)){
@@ -131,10 +135,20 @@ function App () {
           // Remove -- at the start of expression/replace with + elsewhere, if any
           iFormula.current = fixDashes(iFormula.current + inputKey);
           setInput(fixDashes(input + inputKey));
+          console.log("familing here", hasDecimal.current);
+
+          entryCount.current = INIT;
+          //console.log("here ansesr is:", answer);
+          //console.log("an flag:", hasAnswer.current);
+          //iFormula.current = (answer + inputKey).replace(/[.]/g, "");
+          //setAnswer(STRING_INIT);
+          hasAnswer.current = OFF;
+          hasDecimal.current = OFF;
+
         } else if ((entryCount.current < ENTRY_MAX) & /[0-9]/.test(inputKey)) {
           entryCount.current++;
           // Remove unnecessary trailing/leading zeros if any.
-          console.log("hD, rmL, IF, inkey: ", hasDecimal.current, rmLeading(iFormula.current, inputKey), iFormula.current, inputKey);
+          console.log("hD, rmL, IF, inkey: ", hasDecimal.current, rmLeading(iFormula.current + inputKey, inputKey), iFormula.current, inputKey);
           iFormula.current = rmLeading(iFormula.current + inputKey);
           console.log("hD, rmL, EF, inkey", hasDecimal.current, rmLeading(input + inputKey), input, inputKey);
           setInput(rmLeading(input + inputKey));
@@ -146,15 +160,20 @@ function App () {
         } else if ((entryCount.current > INIT) & /[+*/]/.test(inputKey)) {
           entryCount.current = INIT;
           hasDecimal.current = OFF;
+
+          console.log("sensed multiOps, current is", inputKey, "previous was", input);
           iFormula.current = iFormula.current + inputKey;
           setInput(input + inputKey);
-        } else if (entryCount.current >= ENTRY_MAX) {
+        } else if ((entryCount.current === INIT) & /[+*/]/.test(inputKey)) {
+          // This is in place to allow change of operator from pevious one
+          iFormula.current = iFormula.current.replace(/[-+*/]+$/, inputKey);
+          setInput(input.replace(/[-+*/]+$/, inputKey));
+        }else if (entryCount.current >= ENTRY_MAX) {
           notify(ENTRY_MAX_MSG);
         }
 
-        console.log("after all is done", hasAnswer);
+        console.log("after all is done, we have answer?", hasAnswer.current, "count:", entryCount.current);
     }
-
 
 
   } 
