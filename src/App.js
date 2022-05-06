@@ -18,17 +18,19 @@ function App () {
   const iFormula = useRef(""); // Internal formula (without decimals)
   const entryCount = useRef(INIT);
   //const formulaCount = useRef(INIT);
-  const hasAnswer = useRef(OFF);
+  const hasAnswer = useRef(false);
   
   //console.log("formula:", iFormula.current);
 
   useEffect(() => {
     // Reset calculator status on power change
     setInput("");
+    //setAnswer("");
+    console.log("tuone sasa", isPowered);
     (isPowered) ? setAnswer(STRING_INIT) : setAnswer("");
     !isPowered && setHighB(OFF);
-    !isPowered && (hasAnswer.current = OFF);
-    !isPowered && (hasDecimal.current = OFF);
+    !isPowered && (hasAnswer.current = false);
+    !isPowered && (hasDecimal.current = false);
     !isPowered && (entryCount.current = INIT);
     !isPowered && (iFormula.current = "");
   }, [isPowered]);
@@ -165,7 +167,7 @@ function App () {
           iFormula.current = iFormula.current + inputKey;
           setInput(input + inputKey);
         } else if ((entryCount.current === INIT) & /[+*/]/.test(inputKey)) {
-          // This is in place to allow change of operator from pevious one
+          // Allow the last input operator to overide pevious ones
           iFormula.current = iFormula.current.replace(/[-+*/]+$/, inputKey);
           setInput(input.replace(/[-+*/]+$/, inputKey));
         }else if (entryCount.current >= ENTRY_MAX) {
@@ -187,11 +189,11 @@ function App () {
           <Display
             status={isPowered}
             input={input}
-            result={(errorMsg)
-              ? errorMsg 
-              : (hasAnswer.current) 
-              ? answer 
-              : (input === "") ? "0" : input.match(/([-+*/]|\d*[.]*\d*[.]*|\d*)$/)[0]
+            result={
+              (errorMsg) ? errorMsg 
+              : (hasAnswer.current) ? answer 
+              : (input === "" & isPowered) ? "0"
+              : isPowered && input.match(/([-+*/]|\d*[.]*\d*[.]*|\d*)$/)[0]
             }
             isHb={highB} />
           <Keyboard status={isPowered} onSetInput={handleInput} isHb={highB} onChangeHb={setHighB} />
