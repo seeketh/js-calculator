@@ -13,12 +13,12 @@ export class Key extends Component {
 
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.checkHb = this.checkHb.bind(this); // Short hand of checking High brightness status.
+        this.checkHb = this.checkHb.bind(this); // Check High brightness status.
 
-        this.state = {keyClass: (this.props.keyData.type) ? INACTIVE_LONG_KEY : INACTIVE_KEY};
+        this.state = {keyClass: (this.props.keyData.type) ? INACTIVE_LONG_KEY : INACTIVE_KEY}; // Styling class for the key.
     }
 
-    // expoected props: key {id, value},  isPowered, onKeyChange
+    // Expected props: key {id, value},  isPowered, onKeyChange
 
     componentDidMount() {
         document.addEventListener("keydown", this.handleKeyDown);
