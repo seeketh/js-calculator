@@ -4,7 +4,7 @@ import { ACTIVE_KEY, LONG_KEY, INACTIVE_KEY, INACTIVE_LONG_KEY, ACTIVE_LONG_KEY,
 import '../css/Key.scss';
 import { IoSunnyOutline, IoSunnySharp } from 'react-icons/io5';
 
-// Calculator Keyboard Key.
+// A Calculator Keyboard Key.
 
 export class Key extends Component {
 
@@ -18,15 +18,16 @@ export class Key extends Component {
         this.state = {keyClass: (this.props.keyData.type) ? INACTIVE_LONG_KEY : INACTIVE_KEY}; // Styling class for the key.
     }
 
-    // Expected props: key {id, value},  isPowered, onKeyChange
+    // Expected props: key {id, value},  isPowered, onKeyActivate, isHb, onChangeHb
 
     componentDidMount() {
         document.addEventListener("keydown", this.handleKeyDown);
     }
 
     componentDidUpdate() {
+        // Disable brightness indicator when the calculator is turned off (from an active high brightness state)
         (this.checkHb() & !this.props.isPowered & !(this.state.keyClass === INACTIVE_KEY)) && this.setState({keyClass: INACTIVE_KEY});
-        console.log("key component updated");
+        //console.log("key component updated");
     }
 
     componentWillUnmount() {
@@ -51,28 +52,23 @@ export class Key extends Component {
         if (this.props.isPowered) {
             // Set CSS style based on key type and functionality
             this.setState({
-                keyClass: (this.props.keyData.type)
-                ? ACTIVE_LONG_KEY
-                : ACTIVE_KEY
+                keyClass: (this.props.keyData.type) ? ACTIVE_LONG_KEY : ACTIVE_KEY
             });
-            (this.checkHb() & this.props.isHb)
-            ? this.props.onChangeHb(OFF)
-            : (this.checkHb() & !this.props.isHb) ? this.props.onChangeHb(ON) : this.props.onKeyActivate(this.props.keyData.value);
-            setTimeout(() => {this.setState({
-                keyClass: (this.props.keyData.type)
-                ? INACTIVE_LONG_KEY
-                : (this.checkHb() & this.props.isHb) ? ACTIVATED_HB_KEY : INACTIVE_KEY
+
+            (this.checkHb() & this.props.isHb) ? this.props.onChangeHb(OFF)
+            : (this.checkHb() & !this.props.isHb) ? this.props.onChangeHb(ON)
+                : this.props.onKeyActivate(this.props.keyData.value); // It is not Hb key.
+
+            setTimeout(() => {
+                this.setState({
+                    keyClass: (this.props.keyData.type) ? INACTIVE_LONG_KEY
+                    : (this.checkHb() & this.props.isHb) ? ACTIVATED_HB_KEY : INACTIVE_KEY
             })}, 100);
         }
     }
 
-
-
-
     render() {
         // Dermine key label
-        //console.log("is key hb:", this.checkHb())
-        //console.log("is hb key actibated", this.props.isHb);
         const label = (this.checkHb()) ? (this.props.isHb) ? <IoSunnySharp /> : <IoSunnyOutline />: this.props.keyData.value;
 
         return (

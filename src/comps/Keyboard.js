@@ -4,7 +4,7 @@ import { Key } from './Key';
 import '../css/Keyboard.scss';
 
 
-// Calculator Keyboard.
+// The Calculator Keyboard.
 
 function Keyboard(props) {
 

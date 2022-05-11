@@ -1,4 +1,4 @@
-import { ENTRY_MAX, ENTRY_MAX_MSG, INIT, ON, OFF, STRING_INIT } from './comps/config'; // Setup goodies.
+import { ENTRY_MAX, ENTRY_MAX_MSG, INIT, OFF, STRING_INIT } from './comps/config'; // Setup goodies.
 import { useEffect, useRef, useState } from 'react';
 import './css/App.scss'; 
 import { Display, Keyboard, PowerBtn } from './comps'; // Calculator main components.
